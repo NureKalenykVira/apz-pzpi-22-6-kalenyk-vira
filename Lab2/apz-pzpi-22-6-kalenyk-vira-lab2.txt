@@ -197,7 +197,41 @@ API Gateway викликає методи кожного з компоненті
 Додаток В 
 Програмний код
 
-В.1 Резервне копіювання користувацьких даних
+В.1 Математична обробка прикладних даних
+GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira.
+	
+1.	const calculateDaysLeft = (expiryDate) => {
+2.	    const now = new Date();
+3.	    const expiry = new Date(expiryDate);
+4.	    const timeDifference = expiry.getTime() - now.getTime();
+5.	    const daysLeft = Math.ceil(timeDifference / (1000 * 3600 * 24));
+6.	    return daysLeft > 0 ? daysLeft : 0;
+7.	};
+8.	const daysRemaining = calculateDaysLeft('2025-06-30');
+9.	console.log(`Залишилось днів до закінчення терміну придатності: ${daysRemaining}`); 
+
+В.2 Адміністрування бізнес-логіки системи (Генерація звітів)
+GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira.
+
+1.	const generateGeneralReport = async (req, res) => {
+2.	    try {
+3.	        const refrigerators = await db.query('SELECT * FROM refrigerators');
+4.	        const products = await db.query('SELECT * FROM products');
+5.	        
+6.	        const report = {
+7.	            totalRefrigerators: refrigerators.length,
+8.	            totalProducts: products.length,
+9.	            lastUpdated: new Date().toISOString()
+10.	        };
+11.	
+12.	        res.status(200).json(report);
+13.	    } catch (error) {
+14.	        console.error('Помилка під час генерації звіту:', error);
+15.	        res.status(500).json({ message: 'Помилка під час генерації звіту.' });
+16.	    }
+17.	};
+
+В.3 Резервне копіювання користувацьких даних
 GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira.
 
 1.	const backupDatabase = async (req, res) => {
@@ -211,82 +245,48 @@ GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-
 9.	    }
 10.	};
 
-В.2 Відновлення бази даних
+В.4 Відновлення бази даних
 GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira.
 	
-11.	const restoreDatabase = async (req, res) => {
-12.	    try {
-13.	        console.log("Відновлення бази даних...");
-14.	        await db.query('RESTORE DATABASE fridge_system FROM DISK = "backup_path.bak"');
-15.	        res.status(200).json({ message: 'Відновлення бази даних завершено успішно.' });
-16.	    } catch (error) {
-17.	        console.error('Помилка під час відновлення:', error);
-18.	        res.status(500).json({ message: 'Помилка під час відновлення.' });
-19.	    }
-20.	};
+1.	const restoreDatabase = async (req, res) => {
+2.	    try {
+3.	        console.log("Відновлення бази даних...");
+4.	        await db.query('RESTORE DATABASE fridge_system FROM DISK = "backup_path.bak"');
+5.	        res.status(200).json({ message: 'Відновлення бази даних завершено успішно.' });
+6.	    } catch (error) {
+7.	        console.error('Помилка під час відновлення:', error);
+8.	        res.status(500).json({ message: 'Помилка під час відновлення.' });
+9.	    }
+10.	};
 
-В.3 Міграція бази даних
+В.5 Міграція бази даних
 GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira.
 
-21.	const migrateDatabase = async (req, res) => {
-22.	    try {
-23.	        console.log("Запуск міграції бази даних...");
-24.	        await db.query('RUN MIGRATIONS');
-25.	        res.status(200).json({ message: 'Міграція бази даних завершена успішно.' });
-26.	    } catch (error) {
-27.	        console.error('Помилка під час міграції бази даних:', error);
-28.	        res.status(500).json({ message: 'Помилка під час міграції бази даних.' });
-29.	    }
-30.	};
+1.	const migrateDatabase = async (req, res) => {
+2.	    try {
+3.	        console.log("Запуск міграції бази даних...");
+4.	        await db.query('RUN MIGRATIONS');
+5.	        res.status(200).json({ message: 'Міграція бази даних завершена успішно.' });
+6.	    } catch (error) {
+7.	        console.error('Помилка під час міграції бази даних:', error);
+8.	        res.status(500).json({ message: 'Помилка під час міграції бази даних.' });
+9.	    }
+10.	};
 
-В.4 Адміністрування доступу до бази даних
+В.6 Адміністрування доступу до бази даних
 GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira.
 
-31.	const manageDatabaseAccess = async (req, res) => {
-32.	    const { userId, accessLevel } = req.body;
-33.	    try {
-34.	        console.log(`Зміна рівня доступу для користувача ${userId} на ${accessLevel}...`);
-35.	        await db.query(`UPDATE users SET role = ? WHERE id = ?`, [accessLevel, userId]);
-36.	        res.status(200).json({ message: `Рівень доступу для користувача ${userId} успішно змінено.` });
-37.	    } catch (error) {
-38.	        console.error('Помилка при зміні рівня доступу:', error);
-39.	        res.status(500).json({ message: 'Помилка при зміні рівня доступу.' });
-40.	    }
-41.	};
-
-В.5 Адміністрування бізнес-логіки системи (Генерація звітів)
-GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira.
-
-42.	const generateGeneralReport = async (req, res) => {
-43.	    try {
-44.	        const refrigerators = await db.query('SELECT * FROM refrigerators');
-45.	        const products = await db.query('SELECT * FROM products');
-46.	        
-47.	        const report = {
-48.	            totalRefrigerators: refrigerators.length,
-49.	            totalProducts: products.length,
-50.	            lastUpdated: new Date().toISOString()
-51.	        };
-52.	
-53.	        res.status(200).json(report);
-54.	    } catch (error) {
-55.	        console.error('Помилка під час генерації звіту:', error);
-56.	        res.status(500).json({ message: 'Помилка під час генерації звіту.' });
-57.	    }
-58.	};	
-
-В.6 Математична обробка прикладних даних
-GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira.
-	
-59.	const calculateDaysLeft = (expiryDate) => {
-60.	    const now = new Date();
-61.	    const expiry = new Date(expiryDate);
-62.	    const timeDifference = expiry.getTime() - now.getTime();
-63.	    const daysLeft = Math.ceil(timeDifference / (1000 * 3600 * 24));
-64.	    return daysLeft > 0 ? daysLeft : 0;
-65.	};
-66.	const daysRemaining = calculateDaysLeft('2025-06-30');
-67.	console.log(`Залишилось днів до закінчення терміну придатності: ${daysRemaining}`); 
+1.	const manageDatabaseAccess = async (req, res) => {
+2.	    const { userId, accessLevel } = req.body;
+3.	    try {
+4.	        console.log(`Зміна рівня доступу для користувача ${userId} на ${accessLevel}...`);
+5.	        await db.query(`UPDATE users SET role = ? WHERE id = ?`, [accessLevel, userId]);
+6.	        res.status(200).json({ message: `Рівень доступу для користувача ${userId} успішно змінено.` });
+7.	    } catch (error) {
+8.	        console.error('Помилка при зміні рівня доступу:', error);
+9.	        res.status(500).json({ message: 'Помилка при зміні рівня доступу.' });
+10.	    }
+11.	};	
 
 Додаток Г
 Посилання на відеозапис доповіді та текст хронологічного опису доповіді
