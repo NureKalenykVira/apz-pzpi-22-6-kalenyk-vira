@@ -125,63 +125,18 @@ API Gateway викликає методи кожного з компоненті
 Система підтримує багаторівневе адміністрування, включаючи управління конфігураціями, резервне копіювання та відновлення даних. Розроблено REST API для забезпечення взаємодії між компонентами, виконано тестування основних функцій та побудовано UML-діаграми для опису архітектури.
 
 ДОДАТОК А
-Специфікація REST
-Перелік реалізованих REST API методів:
-1)	GET /users — отримати список усіх користувачів; 
-2)	GET /users/:id — отримати дані користувача за його ID; 
-3)	POST /users — створити нового користувача; 
-4)	PUT /users/:id — оновити інформацію про користувача; 
-5)	DELETE /users/:id — видалити користувача; 
-6)	GET /refrigerators — отримати список усіх холодильників; 
-7)	GET /refrigerators/:id — отримати інформацію про холодильник за його ID; 
-8)	POST /refrigerators — створити новий холодильник; 
-9)	PUT /refrigerators/:id — оновити дані про холодильник;
-10)	DELETE /refrigerators/:id — видалити холодильник; 
-11)	GET /refrigerators/user/:userId — отримати холодильники, які належать конкретному користувачу; 
-12)	GET /refrigerators/location/:location — отримати холодильники за локацією; 
-13)	GET /refrigerators/:id/last-update — отримати дату останнього оновлення холодильника; 
-14)	GET /products — отримати список усіх продуктів; 
-15)	GET /products/:id — отримати інформацію про продукт за його ID; 
-16)	POST /products — додати новий продукт; 
-17)	PUT /products/:id — оновити дані продукту; 
-18)	DELETE /products/:id — видалити продукт; 
-19)	GET /products/refrigerator/:refrigeratorId — отримати продукти, що знаходяться в певному холодильнику; 
-20)	GET /products/category/:category — отримати продукти за категорією; 
-21)	GET /sensors — отримати список усіх сенсорів; 
-22)	GET /sensors/:id — отримати інформацію про сенсор за його ID; 
-23)	POST /sensors — додати новий сенсор; 
-24)	PUT /sensors/:id — оновити дані сенсора; 
-25)	DELETE /sensors/:id — видалити сенсор; 
-26)	GET /sensors/refrigerator/:refrigeratorId — отримати сенсори для конкретного холодильника; 
-27)	PATCH /sensors/:id/status — оновити статус сенсора (Active/Inactive); 
-28)	GET /sensors/type/:type — отримати сенсори за типом (Temperature, Humidity, RFID); 
-29)	GET /sensor-data — отримати список усіх показників сенсорів; 
-30)	GET /sensor-data/:id — отримати дані сенсора за його ID; 
-31)	POST /sensor-data — додати новий запис показників; 
-32)	PUT /sensor-data/:id — оновити дані сенсора; 
-33)	DELETE /sensor-data/:id — видалити дані сенсора; 
-34)	GET /sensor-data/sensor/:sensorId — отримати всі дані для конкретного сенсора; 
-35)	GET /sensor-data/product/:productId — отримати дані для продукту, відслідкованого сенсором; 
-36)	GET /sensor-data/date — отримати дані за датою; 
-37)	GET /notifications — отримати список усіх сповіщень; 
-38)	GET /notifications/:id — отримати інформацію про сповіщення за його ID; 
-39)	POST /notifications — додати нове сповіщення; 
-40)	PATCH /notifications/:id/status — оновити статус сповіщення (New/Read); 
-41)	DELETE /notifications/:id — видалити сповіщення; 
-42)	GET /notifications/user/:userId — отримати сповіщення, пов’язані з конкретним користувачем;
-43)	GET /admin/db/performance — моніторинг процесів бази даних;
-44)	POST /admin/db/backup — створення резервної копії бази даних;
-45)	POST /admin/db/restore — відновлення бази даних з резервної копії;
-46)	POST /admin/db/migrate — міграція бази даних;
-47)	POST /admin/db/access — управління доступами до бази даних;
-48)	GET /admin/configurations — отримання списку конфігурацій;
-49)	PUT /admin/configurations — оновлення конфігурації;
-50)	GET /admin/general-report — генерація загального звіту;
-51)	GET /admin/api-status — перевірка статусу API;
-52)	GET /admin/notification-rules — отримання всіх правил сповіщень;
-53)	POST /admin/notification-rules — створення нового правила сповіщень;
-54)	PUT /admin/notification-rules/:id — оновлення правила сповіщень;
-55)	DELETE /admin/notification-rules/:id — видалення правила сповіщень.
+Посилання на відеозапис доповіді та текст хронологічного опису доповіді
+Відеозапис доповіді на YouTube: https://youtu.be/I2KxBqqqNeg.
+Хронологічний опис доповіді:
+1. 00:00 - Привітання; 
+2. 00:19 - Опис звіту до лабораторної роботи 2; 
+3. 01:08 – Огляд створених діаграм; 
+4. 02:37 – Опис підключення бази даних;
+5. 02:48 – Опис архітектури серверної частини;
+6. 03:53 – Опис реалізованих раніше CRUD-операцій;
+7. 04:15 – Опис змін, що були внесені в код серверної частини при виконанні цієї лабораторної роботи;
+8. 05:24 – Тестування створених запитів;
+9. 12:20 – Висновки.
  
 Додаток Б 
 Графічні матеріали
@@ -289,15 +244,60 @@ GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-
 11.	};	
 
 Додаток Г
-Посилання на відеозапис доповіді та текст хронологічного опису доповіді
-Відеозапис доповіді на YouTube: https://youtu.be/I2KxBqqqNeg.
-Хронологічний опис доповіді:
-1. 00:00 - Привітання; 
-2. 00:19 - Опис звіту до лабораторної роботи 2; 
-3. 01:08 – Огляд створених діаграм; 
-4. 02:37 – Опис підключення бази даних;
-5. 02:48 – Опис архітектури серверної частини;
-6. 03:53 – Опис реалізованих раніше CRUD-операцій;
-7. 04:15 – Опис змін, що були внесені в код серверної частини при виконанні цієї лабораторної роботи;
-8. 05:24 – Тестування створених запитів;
-9. 12:20 – Висновки.
+Специфікація REST
+Перелік реалізованих REST API методів:
+1)	GET /users — отримати список усіх користувачів; 
+2)	GET /users/:id — отримати дані користувача за його ID; 
+3)	POST /users — створити нового користувача; 
+4)	PUT /users/:id — оновити інформацію про користувача; 
+5)	DELETE /users/:id — видалити користувача; 
+6)	GET /refrigerators — отримати список усіх холодильників; 
+7)	GET /refrigerators/:id — отримати інформацію про холодильник за його ID; 
+8)	POST /refrigerators — створити новий холодильник; 
+9)	PUT /refrigerators/:id — оновити дані про холодильник;
+10)	DELETE /refrigerators/:id — видалити холодильник; 
+11)	GET /refrigerators/user/:userId — отримати холодильники, які належать конкретному користувачу; 
+12)	GET /refrigerators/location/:location — отримати холодильники за локацією; 
+13)	GET /refrigerators/:id/last-update — отримати дату останнього оновлення холодильника; 
+14)	GET /products — отримати список усіх продуктів; 
+15)	GET /products/:id — отримати інформацію про продукт за його ID; 
+16)	POST /products — додати новий продукт; 
+17)	PUT /products/:id — оновити дані продукту; 
+18)	DELETE /products/:id — видалити продукт; 
+19)	GET /products/refrigerator/:refrigeratorId — отримати продукти, що знаходяться в певному холодильнику; 
+20)	GET /products/category/:category — отримати продукти за категорією; 
+21)	GET /sensors — отримати список усіх сенсорів; 
+22)	GET /sensors/:id — отримати інформацію про сенсор за його ID; 
+23)	POST /sensors — додати новий сенсор; 
+24)	PUT /sensors/:id — оновити дані сенсора; 
+25)	DELETE /sensors/:id — видалити сенсор; 
+26)	GET /sensors/refrigerator/:refrigeratorId — отримати сенсори для конкретного холодильника; 
+27)	PATCH /sensors/:id/status — оновити статус сенсора (Active/Inactive); 
+28)	GET /sensors/type/:type — отримати сенсори за типом (Temperature, Humidity, RFID); 
+29)	GET /sensor-data — отримати список усіх показників сенсорів; 
+30)	GET /sensor-data/:id — отримати дані сенсора за його ID; 
+31)	POST /sensor-data — додати новий запис показників; 
+32)	PUT /sensor-data/:id — оновити дані сенсора; 
+33)	DELETE /sensor-data/:id — видалити дані сенсора; 
+34)	GET /sensor-data/sensor/:sensorId — отримати всі дані для конкретного сенсора; 
+35)	GET /sensor-data/product/:productId — отримати дані для продукту, відслідкованого сенсором; 
+36)	GET /sensor-data/date — отримати дані за датою; 
+37)	GET /notifications — отримати список усіх сповіщень; 
+38)	GET /notifications/:id — отримати інформацію про сповіщення за його ID; 
+39)	POST /notifications — додати нове сповіщення; 
+40)	PATCH /notifications/:id/status — оновити статус сповіщення (New/Read); 
+41)	DELETE /notifications/:id — видалити сповіщення; 
+42)	GET /notifications/user/:userId — отримати сповіщення, пов’язані з конкретним користувачем;
+43)	GET /admin/db/performance — моніторинг процесів бази даних;
+44)	POST /admin/db/backup — створення резервної копії бази даних;
+45)	POST /admin/db/restore — відновлення бази даних з резервної копії;
+46)	POST /admin/db/migrate — міграція бази даних;
+47)	POST /admin/db/access — управління доступами до бази даних;
+48)	GET /admin/configurations — отримання списку конфігурацій;
+49)	PUT /admin/configurations — оновлення конфігурації;
+50)	GET /admin/general-report — генерація загального звіту;
+51)	GET /admin/api-status — перевірка статусу API;
+52)	GET /admin/notification-rules — отримання всіх правил сповіщень;
+53)	POST /admin/notification-rules — створення нового правила сповіщень;
+54)	PUT /admin/notification-rules/:id — оновлення правила сповіщень;
+55)	DELETE /admin/notification-rules/:id — видалення правила сповіщень.
