@@ -153,7 +153,7 @@ API Gateway викликає методи кожного з компоненті
 Програмний код
 
 В.1 Математична обробка прикладних даних
-GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/business-logic/calculateRecommendedConsumptionDate.js.
+GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/business-logic/calculateRecommendedConsumptionDate.js.
 	
 1.	const calculateDaysLeft = (expiryDate) => {
 2.	    const now = new Date();
@@ -166,7 +166,7 @@ GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-
 9.	console.log(`Залишилось днів до закінчення терміну придатності: ${daysRemaining}`); 
 
 В.2 Адміністрування бізнес-логіки системи (Генерація звітів)
-GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/controllers/adminController.js.
+GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/controllers/adminController.js.
 
 1.	const generateGeneralReport = async (req, res) => {
 2.	    try {
@@ -187,7 +187,7 @@ GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-
 17.	};
 
 В.3 Резервне копіювання користувацьких даних
-GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/controllers/adminController.js.
+GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/controllers/adminController.js.
 
 1.	const backupDatabase = async (req, res) => {
 2.	    try {
@@ -201,7 +201,7 @@ GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-
 10.	};
 
 В.4 Відновлення бази даних
-GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/controllers/adminController.js.
+GitHub репозиторій: hhttps://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/controllers/adminController.js.
 	
 1.	const restoreDatabase = async (req, res) => {
 2.	    try {
@@ -215,7 +215,7 @@ GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-
 10.	};
 
 В.5 Міграція бази даних
-GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/controllers/adminController.js.
+GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/controllers/adminController.js.
 
 1.	const migrateDatabase = async (req, res) => {
 2.	    try {
@@ -229,7 +229,7 @@ GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-
 10.	};
 
 В.6 Адміністрування доступу до бази даних
-GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/controllers/adminController.js.
+GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab2/apz-pzpi-22-6-kalenyk-vira-lab2/fridge-system/controllers/adminController.js.
 
 1.	const manageDatabaseAccess = async (req, res) => {
 2.	    const { userId, accessLevel } = req.body;
