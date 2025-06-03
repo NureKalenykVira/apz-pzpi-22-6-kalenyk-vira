@@ -1,0 +1,40 @@
+.wrapper-center {
+  min-width: 1290px;
+  margin-top: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+section {
+  padding: 28px 32px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.09);
+  max-width: 800px;
+  margin: 0 auto;
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 22px;
+  th, td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e8eaf1;
+    text-align: left;
+    font-size: 1.06rem;
+  }
+  th {
+    background: #f7f9fc;
+    font-weight: 600;
+    color: #4e5d6c;
+  }
+}
+.status-online {
+  color: #19b34a;
+  font-weight: bold;
+}
+.status-offline {
+  color: #d41f1f;
+  font-weight: bold;
+}

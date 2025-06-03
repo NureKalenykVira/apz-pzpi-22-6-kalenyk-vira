@@ -1,0 +1,27 @@
+<div class="login-container">
+  <h2>Good to see you again!</h2>
+
+  <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <label for="email">Enter your email:</label>
+    <input id="email" type="email" formControlName="email" placeholder="email@email.com" />
+
+    <label for="password">Enter your password:</label>
+    <div class="password-field">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        id="password"
+        formControlName="password"
+        placeholder="password"
+      />
+      <button type="button" class="toggle-button" (click)="togglePassword()">
+        {{ showPassword ? '🙈' : '👁️' }}
+      </button>
+    </div>
+
+    <button type="submit" class="confirm">Confirm</button>
+  </form>
+
+  <p class="signup-link">
+    Don't have an account? <a (click)="goTo()">Sign up</a>
+  </p>
+</div>

@@ -1,0 +1,60 @@
+<div class="auth-container">
+  <h2>Create an account</h2>
+
+  <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <label for="name">Your name:</label>
+    <input
+      id="name"
+      type="text"
+      formControlName="name"
+      placeholder="John Doe"
+      [class.invalid]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+    />
+    <div class="error" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.errors?.['required']">
+      Name is required
+    </div>
+
+    <label for="email">Your email:</label>
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      placeholder="email@example.com"
+      [class.invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+    />
+    <div class="error" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['required']">
+      Email is required
+    </div>
+    <div class="error" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['email']">
+      Invalid email format
+    </div>
+
+    <label for="password">Create a password:</label>
+    <div class="password-field">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        id="password"
+        formControlName="password"
+        placeholder="password"
+        [class.invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+      />
+      <button type="button" class="toggle-button" (click)="togglePassword()">
+        {{ showPassword ? '🙈' : '👁️' }}
+      </button>
+    </div>
+    <div class="error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['required']">
+      Password is required
+    </div>
+    <div class="error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['minlength']">
+      Minimum length is 6 characters
+    </div>
+
+    <button type="submit" class="auth-button">Register</button>
+  </form>
+
+  <p class="signup-link">
+    Already have an account?
+    <a (click)="goTo()">Log in</a>
+  </p>
+</div>

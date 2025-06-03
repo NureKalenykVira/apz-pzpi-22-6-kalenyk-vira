@@ -1,0 +1,58 @@
+<div class="wrapper-center">
+<section>
+  <h2>Аналітика системи</h2>
+  <table class="admin-table" *ngIf="report">
+    <thead>
+      <tr>
+        <th>Параметр</th>
+        <th>Значення</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Кількість холодильників</td>
+        <td>{{ report.totalFridges }}</td>
+      </tr>
+      <tr>
+        <td>Кількість продуктів</td>
+        <td>{{ report.totalProducts }}</td>
+      </tr>
+      <tr>
+        <td>Кількість сенсорів</td>
+        <td>{{ report.totalSensors }}</td>
+      </tr>
+      <tr>
+        <td>Оновлено</td>
+        <td>{{ report.generatedAt | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="!report">Дані аналітики недоступні.</p>
+
+  <h2 style="margin-top:36px;">Статус сервісів</h2>
+  <table class="admin-table" *ngIf="apiStatus.length">
+    <thead>
+      <tr>
+        <th>Сервіс</th>
+        <th>Статус</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of apiStatus">
+        <td>{{ s.name }}</td>
+        <td>
+          <span [ngClass]="{'status-online': s.status === 'Online', 'status-offline': s.status !== 'Online'}">
+            {{ s.status }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="!apiStatus.length">Дані про статус сервісів недоступні.</p>
+
+  <div *ngIf="message"
+       style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2563eb;color:#fff;padding:10px 24px;border-radius:7px;z-index:2000;">
+    {{ message }}
+  </div>
+</section>
+</div>

@@ -1,0 +1,49 @@
+<section>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>User ID</th>
+        <th>Назва</th>
+        <th>Локація</th>
+        <th>Створено</th>
+        <th>Оновлено</th>
+        <th>Дія</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let f of refrigerators">
+        <td>{{ f.RefrigeratorID }}</td>
+        <td>{{ f.UserID }}</td>
+        <td>
+          <input [(ngModel)]="f.Name" type="text" class="table-input"/>
+        </td>
+        <td>
+          <input [(ngModel)]="f.Location" type="text" class="table-input"/>
+        </td>
+        <td>{{ f.CreatedAt | date:'short' }}</td>
+        <td>{{ f.UpdatedAt | date:'short' }}</td>
+        <td>
+          <button class="icon-button" title="Зберегти" (click)="saveFridge(f)">💾</button>
+          <button class="icon-button" title="Видалити" (click)="confirmDelete(f)">🗑</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="modal-overlay" *ngIf="confirmDeleteModal">
+    <div class="modal">
+      <h3>Підтвердження</h3>
+      <p>Ви дійсно хочете видалити холодильник <strong>{{ fridgeToDelete?.Name }}</strong>?</p>
+      <div class="modal-buttons">
+        <button (click)="deleteFridge()">Так</button>
+        <button (click)="cancelDelete()">Ні</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div *ngIf="message"
+     style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2563eb;color:#fff;padding:10px 24px;border-radius:7px;z-index:2000;box-shadow:0 2px 10px #0002;">
+  {{ message }}
+</div>

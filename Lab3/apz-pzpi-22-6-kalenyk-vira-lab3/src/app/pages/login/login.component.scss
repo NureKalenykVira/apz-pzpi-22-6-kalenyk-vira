@@ -1,0 +1,87 @@
+.password-field {
+  position: relative;
+
+  input {
+    width: 100%;
+    padding-right: 40px;
+  }
+
+  .toggle-button {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+  }
+}
+
+.login-container {
+  background-color: #eeeeee;
+  font-family: 'Inter', sans-serif;
+  padding: 64px 32px;
+  max-width: 700px;
+  margin: 40px auto 0 auto;
+
+  h2 {
+    font-size: 32px;
+    color: #3c5fec;
+    font-weight: bold;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    label {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    input {
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 500;
+      border: 1px solid #3c5fec;
+      border-radius: 30px;
+      outline: none;
+    }
+
+    .confirm {
+      margin-top: 16px;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      background-color: #3c5fec;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: darken(#3c5fec, 10%);
+      }
+    }
+  }
+
+  .signup-link {
+    margin-top: 32px;
+    font-size: 16px;
+    text-align: center;
+
+    a {
+      color: #3c5fec;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

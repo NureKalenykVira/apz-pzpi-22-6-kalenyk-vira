@@ -1,0 +1,48 @@
+<section>
+  <table class="db-table" *ngIf="processes.length">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Host</th>
+        <th>DB</th>
+        <th>Command</th>
+        <th>Time</th>
+        <th>State</th>
+        <th>Info</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let proc of processes">
+        <td>{{ proc.Id }}</td>
+        <td>{{ proc.User }}</td>
+        <td>{{ proc.Host }}</td>
+        <td>{{ proc.db }}</td>
+        <td>{{ proc.Command }}</td>
+        <td>{{ proc.Time }}</td>
+        <td>{{ proc.State }}</td>
+        <td>{{ proc.Info }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="!processes.length">Дані недоступні.</p>
+
+  <!-- Кнопки знизу справа -->
+  <div class="fixed-buttons">
+    <button class="db-btn" (click)="backup()" [disabled]="isBackupLoading">
+      <span *ngIf="!isBackupLoading">💾 Бекап</span>
+      <span *ngIf="isBackupLoading">Збереження…</span>
+    </button>
+
+    <label class="db-btn upload-btn">
+      <input type="file" (change)="restore($event)" hidden>
+      <span *ngIf="!isRestoreLoading">⏏️ Відновити</span>
+      <span *ngIf="isRestoreLoading">Відновлення…</span>
+    </label>
+  </div>
+
+  <div *ngIf="message"
+       style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2563eb;color:#fff;padding:10px 24px;border-radius:7px;z-index:2000;">
+    {{ message }}
+  </div>
+</section>

@@ -1,0 +1,55 @@
+<section>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fridge ID</th>
+        <th>Тип</th>
+        <th>Статус</th>
+        <th>Створено</th>
+        <th>Оновлено</th>
+        <th>Дія</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of sensors">
+        <td>{{ s.SensorID }}</td>
+        <td>{{ s.RefrigeratorID }}</td>
+        <td><input [(ngModel)]="s.Type" type="text" class="table-input" /></td>
+        <td>
+          <select [(ngModel)]="s.Status" class="table-input">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Error">Error</option>
+          </select>
+        </td>
+        <td>{{ s.CreatedAt | date:'short' }}</td>
+        <td>{{ s.UpdatedAt | date:'short' }}</td>
+        <td>
+          <button class="icon-button" (click)="saveSensor(s)" title="Зберегти">💾</button>
+          <button class="icon-button" (click)="confirmDelete(s)" title="Видалити">🗑</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="sensors.length === 0">Немає жодного сенсора.</p>
+
+  <!-- Модальне вікно підтвердження видалення -->
+  <div class="modal-overlay" *ngIf="confirmDeleteModal">
+    <div class="modal">
+      <h3>Підтвердження</h3>
+      <p>Ви дійсно хочете видалити сенсор <strong>{{ sensorToDelete?.SensorID }}</strong>?</p>
+      <div class="modal-buttons">
+        <button (click)="deleteSensor()">Так</button>
+        <button (click)="cancelDelete()">Ні</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Спливаюче повідомлення -->
+  <div *ngIf="message"
+       style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2563eb;color:#fff;padding:10px 24px;border-radius:7px;z-index:2000;box-shadow:0 2px 10px #0002;">
+    {{ message }}
+  </div>
+</section>

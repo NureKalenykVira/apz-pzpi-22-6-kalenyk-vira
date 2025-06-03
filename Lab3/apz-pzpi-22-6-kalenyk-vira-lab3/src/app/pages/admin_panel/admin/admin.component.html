@@ -1,0 +1,20 @@
+<div class="admin-panel">
+  <aside class="sidebar">
+    <h3>Адмін-панель</h3>
+    <ul>
+      <li *ngIf="role === 'GlobalAdmin'" routerLink="users" routerLinkActive="active">👥 Користувачі</li>
+      <li *ngIf="role === 'GlobalAdmin' || role === 'ServiceAdmin'" routerLink="fridges" routerLinkActive="active">❄️ Холодильники</li>
+      <li *ngIf="role === 'GlobalAdmin' || role === 'ServiceAdmin' " routerLink="products" routerLinkActive="active">🥫 Продукти</li>
+      <li *ngIf="role === 'GlobalAdmin' || role === 'ServiceAdmin' " routerLink="sensors" routerLinkActive="active">📡 Сенсори</li>
+      <li *ngIf="role === 'GlobalAdmin' " routerLink="thresholds" routerLinkActive="active">⚙️ Дані сенсорів</li>
+      <li *ngIf="role === 'GlobalAdmin' " routerLink="reports" routerLinkActive="active">📊 Аналітика та звіти</li>
+      <li *ngIf="role === 'GlobalAdmin' " routerLink="monitoring" routerLinkActive="active">🩺 Моніторинг і логи</li>
+      <li *ngIf="role === 'GlobalAdmin' || role === 'InfrastructureAdmin'" routerLink="database" routerLinkActive="active">💾 База даних</li>
+      <li (click)="logout()">🚪 Вийти</li>
+    </ul>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,28 @@
+<section>
+  <table class="admin-table" *ngIf="logs.length">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Admin ID</th>
+        <th>Дія</th>
+        <th>Опис</th>
+        <th>Дата/Час</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logs">
+        <td>{{ log.id }}</td>
+        <td>{{ log.admin_id }}</td>
+        <td>{{ log.action }}</td>
+        <td>{{ log.description }}</td>
+        <td>{{ log.created_at | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="!logs.length">Логів немає.</p>
+
+  <div *ngIf="message"
+       style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2563eb;color:#fff;padding:10px 24px;border-radius:7px;z-index:2000;">
+    {{ message }}
+  </div>
+</section>

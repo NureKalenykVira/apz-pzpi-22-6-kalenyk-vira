@@ -1,0 +1,220 @@
+<div class="header">
+  <h1>{{ 'MY_REFRIGERATORS' | t }}</h1>
+  <div class="header-buttons">
+    <button class="top-bar" (click)="setLang('ua')" [disabled]="lang === 'ua'">UA</button>
+    <button class="top-bar" (click)="setLang('en')" [disabled]="lang === 'en'">EN</button>
+    <button class="add-button" (click)="showModal = true">+ {{ 'ADD_REFRIGERATOR' | t }}</button>
+    <button class="logout-button" (click)="logout()">{{ 'LOGOUT' | t }}</button>
+  </div>
+</div>
+
+<div *ngIf="showEmptyFridgeHint" class="info-box">
+  To get started, add a refrigerator
+</div>
+
+<!-- Сітка з картками -->
+<div class="fridge-grid">
+  <div class="fridge-card" *ngFor="let fridge of refrigerators">
+    <div class="card-header">
+      <h3>{{ fridge.name }}</h3>
+      <span class="location">{{ fridge.location }}</span>
+      <div class="card-menu">
+        <button class="icon-button" (click)="startEdit(fridge)">✏️</button>
+        <button class="icon-button" (click)="askDelete(fridge)">🗑️</button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <p>{{ 'TEMPERATURE' | t }}: {{ fridge.latestTemp ?? ('NO_DATA' | t) }} °C</p>
+      <p>{{ 'HUMIDITY' | t }}: {{ fridge.latestHumidity ?? ('NO_DATA' | t) }} %</p>
+    </div>
+
+    <div class="card-actions">
+      <button (click)="openFridgeAnalytics(fridge)">{{ 'VIEW_ANALYTICS' | t }}</button>
+      <button (click)="openFridgeProducts(fridge)">{{ 'PRODUCTS' | t }}</button>
+    </div>
+  </div>
+</div>
+
+<div class="alert-toast" *ngFor="let message of expirationAlerts">
+  {{ message }}
+</div>
+
+<!-- Модальне вікно аналітики -->
+<div class="modal-backdrop" *ngIf="showAnalyticsModal">
+  <div class="modal-window analytics-modal">
+    <h2>{{ 'ANALYTICS_FOR' | t:{ name: selectedFridge?.name ?? '' } }}</h2>
+    <div class="analytics-section">
+      <p><strong>{{ 'AVG_TEMPERATURE' | t }}</strong> {{ analyticsData.avgTemp | number:'1.1-2' }} °C</p>
+      <p><strong>{{ 'STABILITY_COEFF' | t }}</strong> {{ analyticsData.stabilityCoeff }}</p>
+      <p><strong>{{ 'TREND' | t }}</strong>
+        {{
+          analyticsData.trend > 0 ? ('WARMING' | t) :
+          analyticsData.trend < 0 ? ('COOLING' | t) :
+          ('STABLE' | t)
+        }}
+        (k = {{ analyticsData.trend }})
+      </p>
+      <p><strong>{{ 'MAX_VIOLATION' | t }}</strong> {{ analyticsData.maxViolationDuration }} {{ 'STEPS' | t }}</p>
+    </div>
+    <h3>{{ 'TEMPERATURE_CHART' | t }}</h3>
+    <canvas id="temperatureChart"></canvas>
+    <h3>{{ 'HUMIDITY_CHART' | t }}</h3>
+    <canvas id="humidityChart"></canvas>
+    <div class="modal-buttons">
+      <button (click)="closeAnalytics()">{{ 'CLOSE' | t }}</button>
+    </div>
+  </div>
+</div>
+
+<!-- Модальне вікно додавання/редагування -->
+<div class="modal-backdrop" *ngIf="showModal">
+  <div class="modal-window">
+    <h2 *ngIf="editingFridge">{{ 'EDIT_REFRIGERATOR' | t }}</h2>
+    <h2 *ngIf="!editingFridge">{{ 'NEW_REFRIGERATOR' | t }}</h2>
+
+    <form (ngSubmit)="editingFridge ? updateRefrigerator() : addRefrigerator()" #form="ngForm">
+      <label>
+        {{ 'NAME' | t }}
+        <input
+          *ngIf="editingFridge; else newNameInput"
+          type="text"
+          [(ngModel)]="editName"
+          name="editName"
+          required
+          minlength="3"
+          #editNameModel="ngModel"
+        />
+      </label>
+
+      <ng-template #newNameInput>
+        <input
+          type="text"
+          [(ngModel)]="newFridge.name"
+          name="name"
+          required
+          minlength="3"
+          #nameModel="ngModel"
+        />
+      </ng-template>
+
+      <label>
+        {{ 'LOCATION' | t }}
+        <input
+          *ngIf="editingFridge; else newLocationInput"
+          type="text"
+          [(ngModel)]="editLocation"
+          name="editLocation"
+          #editLocationModel="ngModel"
+        />
+      </label>
+
+      <ng-template #newLocationInput>
+        <input
+          type="text"
+          [(ngModel)]="newFridge.location"
+          name="location"
+          #locationModel="ngModel"
+        />
+      </ng-template>
+
+      <div class="modal-buttons">
+        <button type="button" (click)="closeModal()">{{ 'CANCEL' | t }}</button>
+        <button type="submit" [disabled]="form.invalid">
+          {{ editingFridge ? ('SAVE_CHANGES' | t) : ('ADD' | t) }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Модальне вікно видалення -->
+<div class="modal-backdrop" *ngIf="showDeleteConfirm">
+  <div class="modal-window">
+    <h2>{{ 'CONFIRM_DELETION' | t }}</h2>
+    <p>{{ 'DELETE_FRIDGE_QUESTION' | t:{ name: selectedFridgeForDelete?.name ?? '' } }}</p>
+    <div class="modal-buttons">
+      <button (click)="closeDeleteModal()">{{ 'CANCEL' | t }}</button>
+      <button (click)="confirmDelete()">{{ 'DELETE' | t }}</button>
+    </div>
+  </div>
+</div>
+
+<!-- Модальне вікно продуктів -->
+<div *ngIf="showProductsModal" class="products-modal-overlay" (click)="closeProductsModal()">
+  <div class="products-modal" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="closeProductsModal()">×</button>
+
+    <h2>{{ 'PRODUCTS_IN' | t:{ name: selectedFridge?.name ?? '' } }}</h2>
+
+    <ul class="products-list">
+      <li *ngFor="let product of products" class="product-item">
+        <div class="product-name">{{ product.Name }}</div>
+        <div class="product-category">({{ product.Category }})</div>
+        <div class="product-expiration">{{ 'EXPIRATION' | t }} {{ product.ExpirationDate | date: 'dd.MM.yyyy' }}</div>
+        <div class="product-rfid">{{ 'RFID' | t }} {{ product.RFIDTag || '-' }}</div>
+        <div class="product-actions">
+          <button (click)="askDeleteProduct(product); $event.stopPropagation()">{{ 'DELETE' | t }}</button>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Кнопка відкриття форми -->
+    <button class="add-product-btn" (click)="showAddProductForm = true" *ngIf="!showAddProductForm">
+      {{ 'ADD_PRODUCT' | t }}
+    </button>
+
+    <!-- Форма додавання продукту -->
+    <form *ngIf="showAddProductForm" [formGroup]="productForm" (ngSubmit)="submitProduct()" class="form-container">
+      <div class="form-group">
+        <label for="name">{{ 'NAME' | t }}</label>
+        <input id="name" class="form-control" formControlName="name" />
+        <small *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="text-danger">
+          {{ 'PRODUCT_NAME_REQUIRED' | t }}
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="category">{{ 'CATEGORY' | t }}</label>
+        <input id="category" class="form-control" formControlName="category" />
+        <small *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched" class="text-danger">
+          {{ 'PRODUCT_CATEGORY_REQUIRED' | t }}
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="expirationDate">{{ 'EXPIRATION' | t }}</label>
+        <input type="date" id="expirationDate" class="form-control" formControlName="expirationDate" />
+        <small *ngIf="productForm.get('expirationDate')?.invalid && productForm.get('expirationDate')?.touched" class="text-danger">
+          {{ 'EXPIRATION_REQUIRED' | t }}
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="rfidTag">RFID Tag</label>
+        <input id="rfidTag" class="form-control" formControlName="rfidTag" />
+        <small *ngIf="productForm.get('rfidTag')?.invalid && productForm.get('rfidTag')?.touched" class="text-danger">
+          {{ 'RFID_TAG_REQUIRED' | t }}
+        </small>
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-success">{{ 'ADD_PRODUCT' | t }}</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelProductForm()">{{ 'CANCEL' | t }}</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Модальне вікно підтвердження видалення продукту -->
+<div *ngIf="showDeleteProductConfirmModal" class="delete-product-confirm-overlay" (click)="cancelDeleteProduct()">
+  <div class="delete-product-confirm-modal" (click)="$event.stopPropagation()">
+    <p>{{ 'DELETE_PRODUCT_QUESTION' | t:{ name: productToDelete?.Name } }}</p>
+    <div class="modal-buttons">
+      <button class="cancel-btn" (click)="cancelDeleteProduct()">{{ 'CANCEL' | t }}</button>
+      <button class="delete-btn" (click)="confirmDeleteProduct()">{{ 'DELETE' | t }}</button>
+    </div>
+  </div>
+</div>
+
+

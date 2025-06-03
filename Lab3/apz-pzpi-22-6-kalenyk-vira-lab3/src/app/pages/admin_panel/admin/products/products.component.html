@@ -1,0 +1,55 @@
+<section>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fridge ID</th>
+        <th>Назва</th>
+        <th>Категорія</th>
+        <th>Термін придатності</th>
+        <th>RFID</th>
+        <th>Додано</th>
+        <th>Оновлено</th>
+        <th>Дія</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of products">
+        <td>{{ p.ProductID }}</td>
+        <td>{{ p.RefrigeratorID }}</td>
+        <td><input [(ngModel)]="p.Name" type="text" class="table-input"/></td>
+        <td><input [(ngModel)]="p.Category" type="text" class="table-input"/></td>
+        <td>
+          <input [(ngModel)]="p.ExpirationDate" type="date" class="table-input"/>
+        </td>
+        <td><input [(ngModel)]="p.RFIDTag" type="text" class="table-input"/></td>
+        <td>{{ p.AddedAt | date:'short' }}</td>
+        <td>{{ p.UpdatedAt | date:'short' }}</td>
+        <td>
+          <button class="icon-button" (click)="saveProduct(p)" title="Зберегти">💾</button>
+          <button class="icon-button" (click)="confirmDelete(p)" title="Видалити">🗑</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="products.length === 0">Немає жодного продукту.</p>
+
+  <!-- Модальне вікно підтвердження видалення -->
+  <div class="modal-overlay" *ngIf="confirmDeleteModal">
+    <div class="modal">
+      <h3>Підтвердження</h3>
+      <p>Ви дійсно хочете видалити продукт <strong>{{ productToDelete?.Name }}</strong>?</p>
+      <div class="modal-buttons">
+        <button (click)="deleteProduct()">Так</button>
+        <button (click)="cancelDelete()">Ні</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Спливаюче повідомлення -->
+  <div *ngIf="message"
+       style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2563eb;color:#fff;padding:10px 24px;border-radius:7px;z-index:2000;">
+    {{ message }}
+  </div>
+</section>

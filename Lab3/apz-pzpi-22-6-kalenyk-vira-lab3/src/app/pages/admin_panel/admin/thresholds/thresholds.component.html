@@ -1,0 +1,37 @@
+<section>
+  <label>
+    Оберіть сенсор:
+    <select [(ngModel)]="selectedSensorId" (change)="onSensorSelect()">
+      <option [ngValue]="null">-- Оберіть --</option>
+      <option *ngFor="let s of sensors" [ngValue]="s.SensorID">{{ s.SensorID }}</option>
+    </select>
+  </label>
+  <table *ngIf="sensorData.length">
+    <thead>
+      <tr>
+        <th>Час</th>
+        <th>Значення</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of sensorData">
+        <td>{{ d.Timestamp | date:'short' }}</td>
+        <td>
+          <span *ngIf="d.Temperature !== null">Темп: {{ d.Temperature }}°C</span><br>
+          <span *ngIf="d.Humidity !== null">Вологість: {{ d.Humidity }}%</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="!sensorData.length && selectedSensorId">Даних поки немає.</p>
+  <div *ngIf="message"
+       style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2563eb;color:#fff;padding:10px 24px;border-radius:7px;z-index:2000;">
+    {{ message }}
+  </div>
+</section>
+
+<div *ngIf="message"
+     style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2563eb;color:#fff;padding:10px 24px;border-radius:7px;z-index:2000;box-shadow:0 2px 10px #0002;">
+  {{ message }}
+</div>
+

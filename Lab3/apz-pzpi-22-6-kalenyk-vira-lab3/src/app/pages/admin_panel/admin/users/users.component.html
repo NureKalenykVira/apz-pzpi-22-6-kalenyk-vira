@@ -1,0 +1,44 @@
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Ім’я</th>
+      <th>Email</th>
+      <th>Роль</th>
+      <th>Дія</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let u of users">
+  <td>{{ u.UserID }}</td>
+  <td>{{ u.Name }}</td>
+  <td>{{ u.Email }}</td>
+  <td>
+    <select [(ngModel)]="u.Role">
+      <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+    </select>
+  </td>
+  <td>
+    <button class="icon-button" (click)="changeRole(u)">💾</button>
+    <button class="icon-button" (click)="confirmDelete(u)">🗑</button>
+  </td>
+</tr>
+  </tbody>
+</table>
+
+<div class="modal-overlay" *ngIf="confirmDeleteModal">
+  <div class="modal">
+    <h3>Підтвердження</h3>
+    <p>Ви дійсно хочете видалити користувача <strong>{{ userToDelete?.Name }}</strong>?</p>
+    <div class="modal-buttons">
+      <button (click)="deleteUser()">Так</button>
+      <button (click)="cancelDelete()">Ні</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="message"
+     style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2563eb;color:#fff;padding:10px 24px;border-radius:7px;z-index:2000;box-shadow:0 2px 10px #0002;">
+  {{ message }}
+</div>
+
