@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MobileAPZ</string>
+    <string name="analytics_for">Аналітика для "%1$s"</string>
+    <string name="products_in_fridge">Продукти для "%1$s"</string>
+    <string name="my_refrigerators">Мої холодильники</string>
+    <string name="logout">Вийти</string>
+    <string name="empty_refrigerators">Щоб розпочати, додайте холодильник)</string>
+    <string name="add_refrigerator">+ Додати холодильник</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MobileAPZ</string>
+    <string name="analytics_for">Analytics for %1$s</string>
+    <string name="products_in_fridge">Products in %1$s</string>
+    <string name="my_refrigerators">My refrigerators</string>
+    <string name="logout">LOGOUT</string>
+    <string name="empty_refrigerators">To get started, add a refrigerator</string>
+    <string name="add_refrigerator">+ ADD REFRIGERATOR</string>
+</resources>

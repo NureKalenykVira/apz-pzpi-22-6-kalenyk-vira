@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    android:layout_marginBottom="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Назва холодильника -->
+        <TextView
+            android:id="@+id/tvFridgeName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Fridge 2"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#222"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnEdit"
+            app:layout_constraintBottom_toTopOf="@id/tvLocation"
+            android:layout_marginEnd="8dp"
+            />
+
+        <!-- Кнопка редагування -->
+        <ImageButton
+            android:id="@+id/btnEdit"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/edit"
+            android:contentDescription="Edit"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="2dp"
+            android:scaleType="centerInside"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnDelete"
+            android:layout_marginEnd="4dp" />
+
+        <!-- Кнопка видалення -->
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/delete"
+            android:contentDescription="Delete"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="2dp"
+            android:scaleType="centerInside"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Локація -->
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Mama's kitchen"
+            android:textSize="14sp"
+            android:textColor="#777"
+            app:layout_constraintTop_toBottomOf="@id/tvFridgeName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="2dp"/>
+
+        <!-- Температура -->
+        <TextView
+            android:id="@+id/tvTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Temperature: 3.0°C"
+            android:textSize="15sp"
+            android:textColor="#222"
+            app:layout_constraintTop_toBottomOf="@id/tvLocation"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Вологість -->
+        <TextView
+            android:id="@+id/tvHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Humidity: 58%"
+            android:textSize="15sp"
+            android:textColor="#222"
+            app:layout_constraintTop_toBottomOf="@id/tvLocation"
+            app:layout_constraintStart_toEndOf="@id/tvTemperature"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Кнопки (View Analytics + Products) -->
+        <Button
+            android:id="@+id/btnViewAnalytics"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:text="View analytics"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:backgroundTint="#4e75ff"
+            android:textColor="#fff"
+            app:layout_constraintTop_toBottomOf="@id/tvTemperature"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnProducts"
+            app:layout_constraintWidth_percent="0.49"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btnProducts"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:text="Products"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:backgroundTint="#4e75ff"
+            android:textColor="#fff"
+            app:layout_constraintTop_toBottomOf="@id/tvTemperature"
+            app:layout_constraintStart_toEndOf="@id/btnViewAnalytics"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.49"
+            android:layout_marginTop="18dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
