@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: PASSWORD
+      MYSQL_DATABASE: fridge_system
+    volumes:
+      - db_data:/var/lib/mysql
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file: .env
+    depends_on:
+      - db
+  web:
+    build:
+      context: ../WebClient/web
+    ports:
+      - "4200:80"
+    depends_on:
+      - app
+  iot:
+    build:
+      context: ../IoTClient
+    environment:
+      - API_URL=http://app:3000
+    depends_on:
+      - app
+volumes:
+  db_data:
