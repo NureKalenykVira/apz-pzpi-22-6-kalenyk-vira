@@ -94,11 +94,70 @@
  
 Рисунок Б.4 - Логи IoT-клієнта з підтвердженням відправки сенсорних даних
 
- 
 Додаток В
 Фрагменти коду
 
-В.1 Docker-compose.yml (головний файл розгортання системи)
+В.1 Математична обробка прикладних даних
+GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab3/apz-pzpi-22-6-kalenyk-vira-lab3/src/app/core/utils/analytics.utils.ts.
+1.	const temps = data.map(d => d.Temperature);
+2.	const humidities = data.map(d => d.Humidity);
+3.	
+4.	const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
+5.	const avgHumidity = humidities.reduce((a, b) => a + b, 0) / humidities.length;
+6.	
+7.	const variance = temps.reduce((sum, t) => sum + (t - avgTemp) ** 2, 0) / temps.length;
+8.	const stddev = Math.sqrt(variance);
+9.	const stabilityCoeff = 1 - stddev / avgTemp;
+10.	
+11.	const x = data.map((_, i) => i);
+12.	const y = temps;
+13.	const n = x.length;
+14.	const sumX = x.reduce((a, b) => a + b, 0);
+15.	const sumY = y.reduce((a, b) => a + b, 0);
+16.	const sumXY = x.reduce((sum, xi, i) => sum + xi * y[i], 0);
+17.	const sumX2 = x.reduce((sum, xi) => sum + xi * xi, 0);
+18.	const trend = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+19.	
+20.	let maxViolation = 0, current = 0;
+21.	for (const t of temps) {
+22.	  if (t < 2 || t > 8) { current++; maxViolation = Math.max(maxViolation, current); }
+23.	  else { current = 0; }
+24.	}
+
+В.2 Адміністрування бізнес-логіки системи
+GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab3/apz-pzpi-22-6-kalenyk-vira-lab3/src/app/pages/admin_panel/admin/users/users.component.ts.
+1.	editUser(user: any) {
+2.	  this.selectedUser = { ...user };
+3.	  this.showEditModal = true;
+4.	}
+5.	
+6.	saveUserChanges() {
+7.	  this.adminService.updateUser(this.selectedUser).subscribe(() => {
+8.	    this.loadUsers(); // Оновити список після зміни
+9.	    this.showEditModal = false;
+10.	  });
+11.	}
+12.	
+13.	deleteUser(userId: string) {
+14.	  if (confirm('Ви впевнені, що хочете видалити користувача?')) {
+15.	    this.adminService.deleteUser(userId).subscribe(() => {
+16.	      this.loadUsers();
+17.	    });
+18.	  }
+19.	}
+
+В.3 Резервне копіювання користувацьких даних
+GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab3/apz-pzpi-22-6-kalenyk-vira-lab3/src/app/pages/admin_panel/admin/database/database.component.ts.
+1.	backupDatabase() {
+2.	return this.http.post('/api/admin/backup', {});
+3.	}
+4.	restoreDatabase(file: File) {
+5.	const formData = new FormData();
+6.	formData.append('backup', file);
+7.	return this.http.post('/api/admin/restore', formData);
+8.	}
+
+В.4 Docker-compose.yml (головний файл розгортання системи)
 GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab5/apz-pzpi-22-6-kalenyk-vira-lab5/docker-compose.yml.
 1.	version: '3.8'
 2.	services:
@@ -135,7 +194,7 @@ GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-
 33.	volumes:
 34.	  db_data:
  
-В.2 Dockerfile для web-клієнта
+В.5 Dockerfile для web-клієнта
 GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab5/apz-pzpi-22-6-kalenyk-vira-lab5/Dockerfile.
 1.	# Build stage
 2.	FROM node:20 AS build
