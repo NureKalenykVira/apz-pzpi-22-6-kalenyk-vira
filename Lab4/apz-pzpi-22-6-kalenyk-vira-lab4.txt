@@ -194,7 +194,18 @@ GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-
 39.	    }
 40.	}
 
-В.3 Побудова графіка динаміки температури
+В.3 Резервне копіювання користувацьких даних
+GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab3/apz-pzpi-22-6-kalenyk-vira-lab3/src/app/pages/admin_panel/admin/database/database.component.ts.
+1.	backupDatabase() {
+2.	return this.http.post('/api/admin/backup', {});
+3.	}
+4.	restoreDatabase(file: File) {
+5.	const formData = new FormData();
+6.	formData.append('backup', file);
+7.	return this.http.post('/api/admin/restore', formData);
+8.	}
+
+В.4 Побудова графіка динаміки температури
 GitHub репозиторій: https://github.com/NureKalenykVira/apz-pzpi-22-6-kalenyk-vira/blob/main/Lab4/apz-pzpi-22-6-kalenyk-vira-lab4/java/com/example/mobileapz/AnalyticsActivity.kt.
 1.	val tempEntries = tempHistory.mapIndexed { i, value -> Entry(i.toFloat(), value) }
 2.	val tempDataSet = LineDataSet(tempEntries, "Temp (°C)").apply {
